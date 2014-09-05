@@ -167,7 +167,7 @@ body {
   overflow-y:auto;
   overflow-x:hidden;
 }
-#sidebar-form li {
+#sidebar-form li, #savePresetModal li {
     margin-bottom: 10px;
 }
 #main {
@@ -230,12 +230,12 @@ body {
 	overflow-x: hidden;
 }
 
-#deleteConfirmModal .modal-dialog {
+#deleteConfirmModal .modal-dialog, #savePresetModal .modal-dialog {
 	margin-top: 45px;
 	max-width: 85%;
 }
 
-#deleteConfirmModal .modal-header {
+#deleteConfirmModal .modal-header, #savePresetModal .modal-header {
 	background-color: #C2C2C2	
 }
 
@@ -272,5 +272,10 @@ body {
 
 .carousel .active.left.deleted {
     opacity:0;
+}
+
+.input-group-addon {
+    min-width:40px;// if you want width please write here //
+    text-align:left;
 }
 

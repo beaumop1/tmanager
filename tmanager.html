@@ -2,167 +2,222 @@
 <html lang="en">
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <title>tManager</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    
-    <link rel="stylesheet" href="bootstrap.min.css">    
-    <link rel="stylesheet" href="font-awesome.min.css">
-    <link rel="stylesheet" href="tmanager.css">
-    
-    <!--[if lt IE 9]>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="utf-8">
+	<title>tManager</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" href="font-awesome.min.css">
+	<link rel="stylesheet" href="tmanager.css">
+
+	<!--[if lt IE 9]>
 	   <script src="gn_html5shim.js"></script>
     <![endif]-->
-    
+
 </head>
 
 <body>
 
-    <!-- Side Bar -->
-<div class="row-offcanvas row-offcanvas-left">
-    
-    <div id="sidebar" class="sidebar-offcanvas">
-        <img src="tmanager.png"/>
-        <div class="col-md-12">           
-            <form id="sidebar-form">
+	<!-- Side Bar -->
+	<div class="row-offcanvas row-offcanvas-left">
 
-                <ul class="nav">
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-heart fa-1x"></i></span>
-  							<select id="presetItems" class="form-control">
-  								<option value="" disabled selected>Preset</option>
-  							</select>
-						</div>
-                    </li>
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-globe fa-1x"></i></span>
-  							<input type="text" class="form-control" id="space" placeholder="Space name" />
-						</div>
-                    </li>
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-briefcase fa-1x"></i></span>
-  							<input type="text" class="form-control" id="bag" placeholder="Bag" />
-						</div>
-                    </li>
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-tag fa-1x"></i></span>
-  							<input type="text" class="form-control" id="tag" placeholder="Tag" />
-						</div>
-                    </li>
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-dot-circle-o fa-1x"></i></span>
-  							<input type="text" class="form-control" id="title" placeholder="Title" />
-						</div>
-                    </li>
-                    <li>
-                        <div class="input-group">
-  							<span class="input-group-addon"><i class="fa fa-user fa-1x"></i></span>
-  							<input type="text" class="form-control" id="author" placeholder="Author" />
-						</div>
-                    </li>
-                </ul>
+		<div id="sidebar" class="sidebar-offcanvas">
+			<img src="tmanager.png"/>
+			<div class="col-md-12">
+				<form id="sidebar-form">
 
-                <button class="btn btn-default btn-primary pull-right data-toggle="tooltip" data-placement="bottom" title="Search"" id="advanced-search" type="submit"><i class="fa fa-search"></i>
-                </button>
-            </form>
-        </div>
+					<ul class="nav">
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-heart fa-1x"></i></span><select id="presetItems" class="form-control"><option value="" disabled selected>Preset</option></select>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-globe fa-1x"></i></span><input type="text" class="form-control" id="space" placeholder="Space name"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-briefcase fa-1x"></i></span><input type="text" class="form-control" id="bag" placeholder="Bag"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-tag fa-1x"></i></span><input type="text" class="form-control" id="tag" placeholder="Tag"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-dot-circle-o fa-1x"></i></span><input type="text" class="form-control" id="title" placeholder="Title"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user fa-1x"></i></span><input type="text" class="form-control" id="author" placeholder="Author"/>
+							</div>
+						</li>
+					</ul>
 
-        <!--<div class="text-center">
+					<div class="pull-right">
+						<button class="btn btn-default btn-primary" data-toggle="tooltip" data-placement="bottom" title="Save as a preset" id="save-preset" type="button">
+							<i class="fa fa-plus-square"></i>
+						</button>
+	
+						<button class="btn btn-default btn-primary" data-toggle="tooltip" data-placement="bottom" title="Search" id="advanced-search" type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+					</div>
+				</form>
+			</div>
+
+			<!--<div class="text-center">
             <p><a href="http://www.tiddlyspace.com" target="_ext">TiddlySpace.com</a>
                 <br><a href="http://www.osmosoft.com" target="_ext">Developed by Osmosoft</a>
             </p>
         </div>
         -->
-    </div>
-    <!-- /Side Bar -->
+		</div>
+		<!-- /Side Bar -->
 
 
 
-    <!--main-->
-    <div id="main">
+		<!--main-->
+		<div id="main">
 
-        <div class="col-md-12 sidebar-toggle">
-            <p>
-                <button type="button" class="btn btn-primary btn-xl" data-toggle="offcanvas" data-toggle="tooltip" data-placement="bottom" title="Show/Hide Search Panel"><i class="fa fa-chevron-right"></i>
-                </button>
-            </p>
-        </div>
-        
-        <div id="sidebar-right" class="sidebar-right-toggle">
-        	<button type="button" class="btn btn-primary btn-xl" data-toggle="expand" data-toggle="tooltip" data-placement="bottom" title="Expand/Collapse All"><i class="fa fa-expand"></i>
-        	</button>
+			<div class="col-md-12 sidebar-toggle">
+				<p>
+					<button type="button" class="btn btn-primary btn-xl"
+						data-toggle="offcanvas" data-toggle="tooltip"
+						data-placement="bottom" title="Show/Hide Search Panel">
+						<i class="fa fa-chevron-right"></i>
+					</button>
+				</p>
+			</div>
+
+			<div id="sidebar-right" class="sidebar-right-toggle">
+				<button type="button" class="btn btn-primary btn-xl"
+					data-toggle="expand" data-toggle="tooltip" data-placement="bottom"
+					title="Expand/Collapse All">
+					<i class="fa fa-expand"></i>
+				</button>
+			</div>
+
+			<div class="container-full">
+				<div id="cards"></div>
+				<!--/row-->
+
+				<br>
+				<div class="clearfix"></div>
+			</div>
+
 		</div>
 
-        <div class="container-full">
-            <div class="row" id="cards">
+		<!--/main-->
 
-            </div>
-            <!--/row-->
+	</div>
+	<!--row-offcanvas row-offcanvas-left-->
 
-            <br>
-            <div class="clearfix"></div>          
-        </div>
-
-    </div>
-
-    <!--/main-->
-
-    </div><!--row-offcanvas row-offcanvas-left-->
-
-    <!--<div id="sidebar-right" class="sidebar-right-toggle">
+	<!--<div id="sidebar-right" class="sidebar-right-toggle">
         <button type="button" class="btn btn-primary btn-xl" data-toggle="expand"><i class="fa fa-expand"></i>
         </button>
     </div>
     -->
-    <!--tiddler modal-->
-    <div id="tiddlerModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    </div>
-    
-    
-    <!--Delete Confirm Modal Dialog-->
-	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModal" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">	            
-	            <h2 class="modal-title" id="myModalLabel">Delete Tiddler</h2>
-	            </div>
-	            <div class="modal-body">
-	                Are you sure you want to delete this Tiddler?
-	                <div class="tiddlerName"></div>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	                <button id="btnDeleteTiddler" type="button" class="btn btn-primary" data-dismiss="modal">Delete</button>
-	        	</div>
-	    </div>
-	  </div>
+	<!--tiddler modal-->
+	<div id="tiddlerModal" class="modal fade" tabindex="-1" role="dialog"
+		aria-hidden="true"></div>
+
+
+	<!--Delete Confirm Modal Dialog-->
+	<div class="modal fade" id="deleteConfirmModal" tabindex="-1"
+		role="dialog" aria-labelledby="deleteConfirmModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="myModalLabel">Delete Tiddler</h2>
+				</div>
+				<div class="modal-body">
+					Are you sure you want to delete this Tiddler?
+					<div class="tiddlerName"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button id="btnDeleteTiddler" type="button" class="btn btn-primary"
+						data-dismiss="modal">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--Save Preset Modal Dialog-->
+	<div class="modal fade" id="savePresetModal" tabindex="-1"
+		role="dialog" aria-labelledby="saveConfirmModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="modal-title" id="myModalLabel">Save Preset</h2>
+				</div>
+				<div class="modal-body">
+					<ul class="nav">
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-heart fa-1x"></i></span><input type="text" class="form-control" id="spPresetName" placeholder="Preset name"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-globe fa-1x"></i></span><input type="text" class="form-control" id="spSpace" placeholder="Space name"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-briefcase fa-1x"></i></span><input type="text" class="form-control" id="spBag" placeholder="Bag"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-tag fa-1x"></i></span><input type="text" class="form-control" id="spTag" placeholder="Tag"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-dot-circle-o fa-1x"></i></span><input type="text" class="form-control" id="spTitle" placeholder="Title"/>
+							</div>
+						</li>
+						<li>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user fa-1x"></i></span><input type="text" class="form-control" id="spAuthor" placeholder="Author"/>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<button id="btnSavePreset" type="button" class="btn btn-primary"
+						data-dismiss="modal">Save</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
+	<!-- handlerbar template references -->
 
-
-    <!-- handlerbar template references -->
-
-    <!-- the card template -->
-    <script id="cardTemplate" type="text/x-handlebars-template">
-        <div class="card">            
+	<!-- the card template -->
+	<script id="cardTemplate" type="text/x-handlebars-template">
+        <div id="card_{{fields._hash}}" class="card col-md-4">            
         	<div class="panel panel-default">
                 <div class="panel-heading">                	
                 	<div class="pull-right">
-                		<a href="#" onClick="showModalCarousel({{tiddlerIndex}});"  role="button" data-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Open"><i class="fa fa-eye fa-2x"></i></a>
-                		<a href="#" onClick="getCardBody({{tiddlerIndex}});" data-toggle="expand-panel" data-toggle="tooltip" data-placement="bottom" title="Expand/Collapse"><i class="expand-toggle fa fa-chevron-down fa-2x"></i></a>
+                		<a href="#" onClick="showModalCarousel('{{fields._hash}}');"  role="button" data-toggle="modal" data-toggle="tooltip" data-placement="bottom" title="Open"><i class="fa fa-eye fa-2x"></i></a>
+                		<a href="#" onClick="getCardBody('{{fields._hash}}');" data-toggle="expand-panel" data-toggle="tooltip" data-placement="bottom" title="Expand/Collapse"><i class="expand-toggle fa fa-chevron-down fa-2x"></i></a>
                 	</div>
                 	<h4>{{title}}</h4>
                 </div>
                 <div class="panel-body">
                     <div class="clearfix"></div>
-                    <div id="tiddler-content-{{tiddlerIndex}}"></div>
+                    <div id="tiddler-content-{{fields._hash}}"></div>
                 </div>
                 <div class="nav panel-footer">
                     <span class="card-tags">
@@ -176,15 +231,15 @@
                         			{{/each}}
                     		</div>
                     	</div>                    	
-                    	<!--<a onClick="getCardBody({{tiddlerIndex}});" class="pull-right" data-toggle="expand-panel"><i class="fa fa-chevron-down fa-1x"></i></a>-->
+                    	<!--<a onClick="getCardBody({{fields._hash}});" class="pull-right" data-toggle="expand-panel"><i class="fa fa-chevron-down fa-1x"></i></a>-->
                     </span>                    
                 </div>
             </div>
         </div>
     </script>
-    
-    <!-- the tiddler modal template -->
-    <script id="tiddlerModalTemplate" type="text/x-handlebars-template">
+
+	<!-- the tiddler modal template -->
+	<script id="tiddlerModalTemplate" type="text/x-handlebars-template">
         <div id="modalCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 
             <div class="carousel-inner">
@@ -195,9 +250,13 @@
 			            <div class="modal-content">
 			                <div class="modal-header">
 			                    <span class="pull-right">
-			                    	<a href="#" onClick="editTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
-			                    	<a href="#" onClick="saveTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-check-square-o fa-2x"></i></a>
-			                    	<a href="#" onClick="confirmDeleteTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash-o fa-2x"></i></a>
+									{{#contains slide1.permissions "write"}}
+			                    		<a href="#" onClick="editTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
+			                    		<a href="#" onClick="saveTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-check-square-o fa-2x"></i></a>
+									{{/contains}}
+			                    	{{#contains slide1.permissions "delete"}}
+										<a href="#" onClick="confirmDeleteTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash-o fa-2x"></i></a>
+									{{/contains}}
 			                    	<a href="#" onClick="" role="button" data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times fa-2x"></i></a>				                    	
 			                    </span>
 			                    <h2 class="text-center" id="tiddlerModalTitle">{{slide1.title}}</h2>
@@ -230,8 +289,7 @@
 			                        			{{/each}}
 			                    		</div>                    	
 			                    	<button class="btn pull-right" data-dismiss="modal" aria-hidden="true">OK</button>
-			                    </span>                 
-			                    
+			                    </span>			                    
 			                </div>
 			            </div>
 	        		</div>
@@ -244,10 +302,13 @@
 			            <div class="modal-content">
 			                <div class="modal-header">
 			                   <span class="pull-right">
-			                    	<a href="#" onClick="editTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
-			                    	<a href="#" onClick="saveTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-check-square-o fa-2x"></i></a>
-			                    	<a href="#" onClick="confirmDeleteTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash-o fa-2x"></i></a>
-			                    	<a href="#" onClick="" role="button" data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times fa-2x"></i></a>				                    	
+									{{#contains slide2.permissions "write"}}
+			                    		<a href="#" onClick="editTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Edit"><i class="fa fa-edit fa-2x"></i></a>
+			                    		<a href="#" onClick="saveTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-check-square-o fa-2x"></i></a>
+									{{/contains}}
+			                    	{{#contains slide2.permissions "delete"}}
+										<a href="#" onClick="confirmDeleteTiddler();" role="button" data-toggle="tooltip" data-placement="bottom" title="Delete"><i class="fa fa-trash-o fa-2x"></i></a>
+									{{/contains}}			                    	<a href="#" onClick="" role="button" data-dismiss="modal" data-toggle="tooltip" data-placement="bottom" title="Close"><i class="fa fa-times fa-2x"></i></a>				                    	
 			                    </span>
 			                    <h2 class="text-center" id="tiddlerModalTitle">{{slide2.title}}</h2>
 			                </div>
@@ -277,10 +338,9 @@
 			                    				{{#each slide2.tags}}
 			                        				<span class="label label-primary tags">{{this}}</span>
 			                        			{{/each}}
-			                    		</div>                    	
-			                    	<button class="btn pull-right" data-dismiss="modal" aria-hidden="true">OK</button>
-			                    </span>                 
-			                    
+			                    		</div>
+			                    	<button class="btn pull-right" data-dismiss="modal" aria-hidden="true">OK</button> 
+			                    </span>                 			                    
 			                </div>
 			            </div>
 	        		</div>
@@ -293,16 +353,16 @@
 
 		</div> <!-- carousel ->
     </script>
-    
-    
-    <!-- script references -->
-    <script type="text/javascript" src="/bags/common/tiddlers/jquery.js"></script>
-    <script type="text/javascript" src="/bags/tiddlyspace/tiddlers/chrjs"></script>
+
+
+	<!-- script references -->
+	<script type="text/javascript" src="/bags/common/tiddlers/jquery.js"></script>
+	<script type="text/javascript" src="/bags/tiddlyspace/tiddlers/chrjs"></script>
 	<script type="text/javascript" src="/bags/common/tiddlers/chrjs-store.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
-    <script type="text/javascript" src="handlebars.min-v1.3.0.js"></script>
-    <script type="text/javascript" src="tmanager.js"></script>
-    
+	<script type="text/javascript" src="bootstrap.min.js"></script>
+	<script type="text/javascript" src="handlebars.min-v1.3.0.js"></script>
+	<script type="text/javascript" src="tmanager.js"></script>
+
 </body>
 
 </html>

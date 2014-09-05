@@ -62,6 +62,26 @@ Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+Handlebars.registerHelper('contains', function( collection, item, options ){
+	// string check
+	if( typeof collection === 'string' ){
+		if( collection.search( item ) >= 0 ){
+			return options.fn(this);
+		}
+		else {
+			return options.inverse(this);
+		}
+	}
+	// "collection" check (objects & arrays)
+	for( var prop in collection ){
+		if( collection.hasOwnProperty( prop ) ){
+			if( collection[prop] == item ) return options.fn(this);
+		}
+	}
+	return options.inverse(this);
+});
+
+
 function htmlEncode(value) {
     //create a in-memory div, set it's inner text(which jQuery automatically encodes)
     //then grab the encoded contents back out.  The div never exists on the page.
@@ -80,10 +100,14 @@ $("#sidebar-form").submit(function (event) {
     //var patt = /(tag|title|bag|creator|modifier):[*|A-Z|a-z|0-9]{2}.*/;
   
 
-    if (spaceText === "") {
-        spaceText = mySPA.host;
-    }
+   // if (spaceText === "") {
+   //     spaceText = mySPA.host;
+   // }
 
+    if (spaceText !== "") {
+    	queryText = queryText.concat('@').concat(spaceText).concat(' ');
+    }
+    
     if (bagText !== "") {
         queryText = queryText.concat('bag:"').concat(bagText).concat('" ');
     }
@@ -96,7 +120,7 @@ $("#sidebar-form").submit(function (event) {
     if (authorText !== "") {
         queryText = queryText.concat('+').concat(authorText).concat(' ');
     }
-
+    
     mySPA.getTiddlers(spaceText, queryText, renderTiddlersAsCardsCallback, errorCallback);
 
     /*    if (patt.test(searchText)) {
@@ -149,6 +173,8 @@ SPA.prototype.getInitialTiddlers = function (tiddlySpace, successCallback, error
 
         var excludeQuery = " !#excludeLists !#excludeSearch";
 
+        //spa.tiddlers = spa.tsStore(excludeQuery).unique().sort('title');
+        
         spa.tiddlers = spa.tsStore(excludeQuery).unique().sort('title');
  
         successCallback(spa.tiddlers);
@@ -310,6 +336,51 @@ function renderTiddlersAsCardsCallback(tiddlers) {
         col_3_html = "<div class=\"col-md-4\">",
         item = 0;
 
+	var cards_html = "";
+	
+    $.each(tiddlers, function () {
+        var col_check = item % 3;
+        this.tiddlerIndex = item;
+        switch (col_check) {
+        case 0:
+            col_1_html += cardTemplate(this);
+            cards_html += '<div class="clearfix visible-xs-block cardclearfix"></div>';
+            break;
+        case 1:
+            col_2_html += cardTemplate(this);
+            break;
+        default:
+            col_3_html += cardTemplate(this);
+        }
+
+        //cards_html += '<li class="col-md-4">' + cardTemplate(this) + '</li>';
+        cards_html +=  cardTemplate(this);
+        item = item + 1;
+    });
+
+    col_1_html = col_1_html + '</div>';
+    col_2_html = col_2_html + '</div>';
+    col_3_html = col_3_html + '</div>';
+
+    //$("#cards").html('<ul class="list-unstyled">'  + cards_html + '</ul>');
+    $("#cards").html(cards_html);
+
+    //Add the toggle to the new cards for the expand/collapse chevron
+    $('[data-toggle=expand-panel]').click(function () {
+        $('i', this).toggleClass('fa fa-chevron-up fa-2x');
+        $('i', this).toggleClass('fa fa-chevron-down fa-2x');
+        $('.panel-body', $(this).parent().parent().parent()).toggleClass('expand');
+    });
+
+}
+
+
+function renderTiddlersAsCardsCallback_old(tiddlers) {
+	var col_1_html = "<div class=\"col-md-4\">",
+        col_2_html = "<div class=\"col-md-4\">",
+        col_3_html = "<div class=\"col-md-4\">",
+        item = 0;
+
     $.each(tiddlers, function () {
         var col_check = item % 3;
         this.tiddlerIndex = item;
@@ -356,20 +427,21 @@ function updateSearchForm() {
 
 }
 
-function getCardBody(tiddlerIndex) {
-    if ($('#tiddler-content-' + tiddlerIndex).html() === "") {
+function getCardBody(hashCode) {	
+    if ($('#tiddler-content-' + hashCode).html() === "") {
+    	var tiddlerIndex = getTiddlerIndexFromHash(hashCode);  
         var tiddler = mySPA.tiddlers[tiddlerIndex];
         console.log(tiddler.title);
         mySPA.tsStore.get(tiddler, function (tiddler) {
             console.log(tiddler);
             if (tiddler.type === 'image/svg+xml') {
-                $('#tiddler-content-' + tiddlerIndex).html(tiddler.text);
+                $('#tiddler-content-' + hashCode).html(tiddler.text);
             } else if (tiddler.type === 'image/png') {
-                $('#tiddler-content-' + tiddlerIndex).html('<img src="' + tiddler.uri + '"/>');
+                $('#tiddler-content-' + hashCode).html('<img src="' + tiddler.uri + '"/>');
             } else if (tiddler.render) {
-                $('#tiddler-content-' + tiddlerIndex).html(tiddler.render);
+                $('#tiddler-content-' + hashCode).html(tiddler.render);
             } else {
-                $('#tiddler-content-' + tiddlerIndex).html('<pre>' + htmlEncode(tiddler.text) + '</pre>');
+                $('#tiddler-content-' + hashCode).html('<pre>' + htmlEncode(tiddler.text) + '</pre>');
             }
         }, true);
     }
@@ -403,22 +475,37 @@ function deleteTiddlerSuccessCallback() {
 	console.log('Tiddler deleted succesfully.');
 	
 	$('#modalCarousel .carousel-inner .item.active .modal-dialog .modal-content').fadeOut('fast').queue(			
-        function() {							
-			if (currentModalTiddlerIndex === mySPA.tiddlers.length - 1) {
+        function() {
+
+			//Update the main page to reflect the tiddler has been removed
+        	removedTiddlerHash = mySPA.tiddlers[currentModalTiddlerIndex].fields._hash;
+        	$('#card_' + removedTiddlerHash ).remove();
+        	$('.cardclearfix').remove();
+        	
+        	$('.card').each(function( index, card){
+        		if (index % 3 === 0) {                
+                    console.log('gfdsgd' + index);
+                    $( card ).before('<div class="clearfix visible-xs-block cardclearfix"></div>');
+                }
+        	});
+        	
+        	if (currentModalTiddlerIndex === mySPA.tiddlers.length - 1) {
 				mySPA.tiddlers.splice(currentModalTiddlerIndex, 1);
 				currentModalTiddlerIndex = 0;
 			} else {
 				mySPA.tiddlers.splice(currentModalTiddlerIndex, 1);
 			}        	
-			
+						
         	if (mySPA.tiddlers.length > 0) {
 				mySPA.getTiddlerDetail(currentModalTiddlerIndex, 'deleted', getTiddlerDetailSuccessCallback);
 			} else {
 				$('#tiddlerModal').modal('hide');
 			}
+        	
 		}
 	);		
 }
+
 
 
 function getTiddlerDetailErrorCallback(error) {
@@ -477,10 +564,22 @@ function renderTiddlerDetail(data, direction) {
 	
 }
 
-function showModalCarousel(tiddlerIndex) {
-    currentModalTiddlerIndex = tiddlerIndex;
-    mySPA.getTiddlerDetail(tiddlerIndex, null, getTiddlerDetailSuccessCallback);
+function getTiddlerIndexFromHash(hashCode) {	
+	var tiddlerIndex = -1;
+	$.each(mySPA.tiddlers, function( index, tiddler ) {
+		if (hashCode === tiddler.fields._hash) {
+			tiddlerIndex = index;			
+		}
+	});	
+	return tiddlerIndex;;
 }
+
+function showModalCarousel(hashCode) {
+    currentModalTiddlerIndex = getTiddlerIndexFromHash(hashCode);  
+    mySPA.getTiddlerDetail(currentModalTiddlerIndex, null, getTiddlerDetailSuccessCallback);
+}
+
+
 
 function slideCard(direction) {
     if (direction === 'prev') {
@@ -535,6 +634,24 @@ function confirmDeleteTiddler() {
 }
 
 
+function confirmSavePreset() {	
+	var options = {
+        "backdrop" : "static"
+	};
+
+	$('#spPresetName').val($('#presetItems').val());
+	$('#spSpace').val($('#space').val());
+	$('#spBag').val($('#bag').val());
+	$('#spTag').val($('#tag').val());
+	$('#spTitle').val($('#title').val());
+	$('#spAuthor').val($('#author').val());
+	
+	$('#savePresetModal .modal-dialog .modal-content .modal-body .tiddlerName').html('<h2>gfdsgf</h2>');
+	
+	$('#savePresetModal').modal(options);
+}
+
+
 $('#btnDeleteTiddler').click(function() {
 	deleteTiddler();
 });
@@ -562,6 +679,8 @@ function errorCallback(error) {
 $(function () {
     //mySPA = new SPA("http://beaumop1-osmoprojects.tiddlyspace.com");
     mySPA = new SPA("http://" + window.location.hostname);
+	//mySPA = new SPA("http://tiddlyspace.com");
+	
 
     //Perform the initial search for tiddlers
     if ($('#container').length === 0) {
@@ -581,6 +700,11 @@ $(function () {
         $('.sidebar-right-toggle i').toggleClass('fa fa-expand');
         $('.sidebar-right-toggle i').toggleClass('fa fa-compress');
         expandCollapseAll();
+    });
+    
+    //Attach the add preset function
+    $('#save-preset').click(function () {
+    	confirmSavePreset();
     });
 
     //Propulate the preset dropdown

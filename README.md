@@ -1,7 +1,7 @@
-# tManager
-## A Single Page Application (SPA) for managing tiddlers within the world of TiddlySpace.
+# tmanager
+## A Single Page Application (SPA) for managing tiddlers within the world of TiddlySpace
 
-Note, this application is at a very early stage and some functionality has yet to be completed.
+**CAUTION, this application is at a very early stage and some functionality has yet to be completed.**
 
 Comments regarding this application and how it can be extended are welcome.
 
